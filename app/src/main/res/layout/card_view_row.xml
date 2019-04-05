@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    android:id="@+id/model_card_view"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:elevation="4dp"
+    card_view:cardElevation="4dp"
+    card_view:cardCornerRadius="4dp"
+    >
+
+  <RelativeLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      >
+   <TextView
+       android:id="@+id/tvBuild"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_centerVertical="true"
+       android:text="Build#"
+       android:layout_margin="8dp"
+       />
+
+   <TextView
+       android:id="@+id/tvBranch"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="Branch"
+       android:textSize="16sp"
+       android:layout_alignTop="@+id/tvBuild"
+       android:layout_alignStart="@+id/tvBuild"
+       android:layout_marginStart="80dp"
+       />
+
+   <TextView
+       android:id="@+id/tvTargetSystem"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="TargetSystem"
+       android:textSize="12sp"
+       android:layout_alignTop="@+id/tvBuild"
+       android:layout_alignStart="@+id/tvBuild"
+       android:layout_marginStart="80dp"
+       android:layout_marginTop="24dp"
+       />
+
+   <Button
+       android:id="@+id/model_price"
+       android:layout_width="50dp"
+       android:layout_height="wrap_content"
+       android:drawableStart="@drawable/ic_file_download"
+       android:paddingStart="13dp"
+       android:background="@drawable/mybutton"
+       android:layout_alignTop="@+id/tvBuild"
+       android:layout_alignParentEnd="true"
+       android:layout_marginStart="80dp"
+       android:layout_marginEnd="15dp"
+       android:layout_centerVertical="true"
+       />
+
+
+  </RelativeLayout>
+
+</android.support.v7.widget.CardView>
