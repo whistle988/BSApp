@@ -1,9 +1,11 @@
-package com.example.bsapp.ui
+package com.example.bsapp.ui.adapter
 
 import android.content.Context
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
+import com.example.bsapp.ui.fragment.HomeFragment
+import com.example.bsapp.ui.fragment.LibraryFragment
 
 class FragmentPagerAdapter(private val myContext: Context, fragmentManager: FragmentManager, internal var totalTabs: Int): FragmentPagerAdapter(fragmentManager){
 

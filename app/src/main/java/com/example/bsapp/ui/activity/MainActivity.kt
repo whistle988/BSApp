@@ -1,10 +1,11 @@
-package com.example.bsapp.ui
+package com.example.bsapp.ui.activity
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_main.*
 import android.support.design.widget.TabLayout
 import com.example.bsapp.R
+import com.example.bsapp.ui.adapter.FragmentPagerAdapter
 
 import io.reactivex.*;
 
@@ -41,9 +42,6 @@ class MainActivity : AppCompatActivity() {
             override fun onTabReselected(p0: TabLayout.Tab) {
             }
         })
-
-        Observable.just("Hello World")
-            .subscribe(line -> System.out.println(line))
     }
 
 

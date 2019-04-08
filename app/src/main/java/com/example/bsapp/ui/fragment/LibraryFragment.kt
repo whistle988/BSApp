@@ -1,4 +1,4 @@
-package com.example.bsapp.ui
+package com.example.bsapp.ui.fragment
 
 
 import android.os.Bundle

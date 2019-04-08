@@ -8,21 +8,18 @@
     android:layout_margin="8dp"
     android:elevation="4dp"
     card_view:cardElevation="4dp"
-    card_view:cardCornerRadius="4dp"
-    >
+    card_view:cardCornerRadius="4dp">
 
   <RelativeLayout
       android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      >
+      android:layout_height="wrap_content">
    <TextView
        android:id="@+id/tvBuild"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
        android:layout_centerVertical="true"
        android:text="Build#"
-       android:layout_margin="8dp"
-       />
+       android:layout_margin="8dp"/>
 
    <TextView
        android:id="@+id/tvBranch"
@@ -32,8 +29,7 @@
        android:textSize="16sp"
        android:layout_alignTop="@+id/tvBuild"
        android:layout_alignStart="@+id/tvBuild"
-       android:layout_marginStart="80dp"
-       />
+       android:layout_marginStart="80dp"/>
 
    <TextView
        android:id="@+id/tvTargetSystem"
@@ -44,8 +40,7 @@
        android:layout_alignTop="@+id/tvBuild"
        android:layout_alignStart="@+id/tvBuild"
        android:layout_marginStart="80dp"
-       android:layout_marginTop="24dp"
-       />
+       android:layout_marginTop="24dp"/>
 
    <Button
        android:id="@+id/model_price"
@@ -58,9 +53,7 @@
        android:layout_alignParentEnd="true"
        android:layout_marginStart="80dp"
        android:layout_marginEnd="15dp"
-       android:layout_centerVertical="true"
-       />
-
+       android:layout_centerVertical="true"/>
 
   </RelativeLayout>
 
