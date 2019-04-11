@@ -43,7 +43,7 @@
        android:layout_marginTop="24dp"/>
 
    <Button
-       android:id="@+id/model_price"
+       android:id="@+id/btnDownload"
        android:layout_width="50dp"
        android:layout_height="wrap_content"
        android:drawableStart="@drawable/ic_file_download"
