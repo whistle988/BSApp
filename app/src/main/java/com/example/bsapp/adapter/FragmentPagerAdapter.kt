@@ -1,4 +1,4 @@
-package com.example.bsapp.ui.adapter
+package com.example.bsapp.adapter
 
 import android.content.Context
 import android.support.v4.app.Fragment
