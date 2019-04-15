@@ -5,7 +5,7 @@ import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_main.*
 import android.support.design.widget.TabLayout
 import com.example.bsapp.R
-import com.example.bsapp.adapter.FragmentPagerAdapter
+import com.example.bsapp.ui.adapter.FragmentPagerAdapter
 
 
 class MainActivity : AppCompatActivity() {

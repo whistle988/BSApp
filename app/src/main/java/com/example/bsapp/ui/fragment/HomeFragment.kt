@@ -9,7 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.bsapp.Api
-import com.example.bsapp.adapter.RViewAdapter
+import com.example.bsapp.ui.adapter.RViewAdapter
 import com.google.gson.GsonBuilder
 import kotlinx.android.synthetic.main.fragment_home.*
 
