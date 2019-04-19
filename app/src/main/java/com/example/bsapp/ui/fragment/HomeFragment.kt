@@ -2,26 +2,38 @@ package com.example.bsapp.ui.fragment
 
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import com.example.bsapp.Api
-import com.example.bsapp.ui.adapter.RViewAdapter
+import android.support.v7.widget.RecyclerView
+import android.view.*
+import android.widget.ProgressBar
+import android.widget.RelativeLayout
+import android.widget.Toast
+import com.example.bsapp.R
+import com.example.bsapp.mvp.GetBsIntractorImpl
+import com.example.bsapp.mvp.MainContract
+import com.example.bsapp.mvp.RecyclerItemClickListener
+import com.example.bsapp.mvp.model.Bs
+import com.example.bsapp.mvp.presenter.MainPresenter
+import com.example.bsapp.ui.adapter.BsAdapter
 import com.google.gson.GsonBuilder
 import kotlinx.android.synthetic.main.fragment_home.*
-
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers;
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import com.example.bsapp.mvp.model.Api as Api
+import android.util.Log
+import kotlin.properties.Delegates
 
 
-class HomeFragment : Fragment() {
+/*class HomeFragment : Fragment() {
 
 
 
@@ -44,7 +56,7 @@ class HomeFragment : Fragment() {
         response.observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe {
-                recycler_view.adapter = RViewAdapter(it,this)
+                recycler_view.adapter = BsAdapter(it,this)
 
             }
 
@@ -65,76 +77,147 @@ class HomeFragment : Fragment() {
             this.layoutManager = LinearLayoutManager(context)
 
         }
+    }
 
+
+}*/
+
+
+class HomeFragment : Fragment(), MainContract.MainView {
+
+    lateinit var dataList: List<Bs>
+    val progressBar: ProgressBar? = null
+    val recyclerView: RecyclerView? = null
+    lateinit var presenter:MainContract.presenter
+
+    init {
+
+        this.dataList = dataList
+    }
+
+
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val view: View =  inflater.inflate(R.layout.fragment_home, container, false)
+
+
+
+        //initializeRecyclerView()
+
+        val mRecyclerView = view.findViewById(R.id.recycler_view) as RecyclerView
+        val mLayoutManager = LinearLayoutManager(this.activity)
+        Log.d("debugMode", "The application stopped after this")
+        mRecyclerView.setLayoutManager(mLayoutManager)
+
+        val mAdapter = BsAdapter(dataList, recyclerItemClickListener)
+        mRecyclerView.setAdapter(mAdapter)
+
+
+        /*ProductListAdapter adapter = new ProductListAdapter(subcategoryKey,
+                getActivity(), isShoppingList);
+*/
+
+        initProgressBar()
+
+
+        presenter = MainPresenter(this, GetBsIntractorImpl())
+        presenter.requestDataFromServer()
+
+        return view
 
     }
 
     /*override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        recycler_view.apply {
-            layoutManager = LinearLayoutManager(activity)
-            //adapter = RViewAdapter(bs)
-        }
+        initializeRecyclerView()
+        initProgressBar()
 
-        fetchJson()
+
+        presenter = MainPresenter(this, GetBsIntractorImpl())
+        presenter.requestDataFromServer()
+
     }*/
 
-    /*fun fetchJson() {
-        println("Attempting to Fetch JSON")
-        val url = "http://bs.sinet.office/builds/InDriverMobile_Android/2928"
-        val request = Request.Builder().url(url).build()
-        val client = OkHttpClient()
 
-        client.newCall(request).enqueue(object : Callback {
-            override fun onResponse(call: Call, response: Response) {
-                val body = response.body()?.string()
-                println(body)
+    private val recyclerItemClickListener = object: RecyclerItemClickListener {
 
-                val gson = GsonBuilder().create()
+        override fun onItemClick(bs:Bs) {
+            Toast.makeText(activity, "Hey!", Toast.LENGTH_LONG).show()
+        }
+    }
 
-                val bs = gson.fromJson(body, Bs::class.java)
 
-                //recycler_view.adapter = RViewAdapter(bs)
-            }
+    /**
+     * Initializing Toolbar and RecyclerView
+     */
+    private fun initializeRecyclerView() {
+        //setSupportActionBar(toolbar)
 
-            override fun onFailure(call: Call, e: IOException) {
-                print("Failed to execute request")
-            }
-        })
+
+        val layoutManager = LinearLayoutManager(context)
+        recyclerView?.setLayoutManager(layoutManager)
+    }
+
+
+    /**
+     * Initializing progressbar programmatically
+     * */
+    private fun initProgressBar() {
+
+        val progressBar = ProgressBar(activity, null, android.R.attr.progressBarStyleLarge)
+        progressBar.setIndeterminate(true)
+
+        val relativeLayout = RelativeLayout(activity)
+        relativeLayout.setGravity(Gravity.CENTER)
+        relativeLayout.addView(progressBar)
+
+        val params = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT)
+        progressBar.setVisibility(View.INVISIBLE)
+
+        activity?.addContentView(relativeLayout, params)
+
+
+    }
+
+    override fun showProgress() {
+        progressBar?.setVisibility(View.VISIBLE)
+    }
+
+    override fun hideProgress() {
+        progressBar?.setVisibility(View.INVISIBLE)
+    }
+
+    override fun setDataToRecyclerView(bs_List:List<Bs>) {
+        val adapter = BsAdapter(bs_List, recyclerItemClickListener)  ///?????????
+        recyclerView?.setAdapter(adapter)
+    }
+    override fun onResponseFailure(throwable:Throwable) {
+        Toast.makeText(activity, "Something went wrong...Error message: " + throwable.message,
+            Toast.LENGTH_LONG).show()
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.onDestroy()
+    }
+
+    /*override fun onCreateOptionsMenu(menu:Menu):Boolean {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu)
+        return true
     }*/
 
-    /*fun getBuilds() {
-        val retrofit: Retrofit = Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-        val api = retrofit.create(Api::class.java)
-        val call = api.getBuilds()
-
-        fun<Bs> Call<com.example.bsapp.Bs>.enqueue(callback: Callback<Bs>.() -> Unit) {
-
-            val callBack = Callback<Bs>()
-            callback.invoke(call)
-
-
-            override fun onResponse(call: Call&lt;UsersList&gt;?, response: Response&lt;UsersList&gt;?) {
-            var usres = response?.body()
-            var user = usres?.users
-            var length = user!!.size
-
-            for (i in 0 until length) {
-                str = str + "\n" + user.get(i).id + " " + user.get(i).login
-            }
-
-            tv_user!!.text = str
+    /*override fun onOptionsItemSelected(item: MenuItem):Boolean {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        val id = item.getItemId()
+        if (id == R.id.action_refresh)
+        {
+            presenter.onRefreshButtonClick()
         }
-
-            override fun onFailure(call: Call&lt;UsersList&gt;?, t: Throwable?) {
-            Log.v("Error", t.toString())
-        }
-        })
+        return super.onOptionsItemSelected(item)
     }*/
 }
-
-
