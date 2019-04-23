@@ -1,38 +1,15 @@
 package com.example.bsapp.ui.fragment
 
 
-import android.annotation.SuppressLint
-import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.*
 import android.widget.ProgressBar
-import android.widget.RelativeLayout
-import android.widget.Toast
 import com.example.bsapp.R
-import com.example.bsapp.mvp.GetBsIntractorImpl
 import com.example.bsapp.mvp.MainContract
-import com.example.bsapp.mvp.RecyclerItemClickListener
-import com.example.bsapp.mvp.model.Bs
-import com.example.bsapp.mvp.presenter.MainPresenter
-import com.example.bsapp.ui.adapter.BsAdapter
-import com.google.gson.GsonBuilder
-import kotlinx.android.synthetic.main.fragment_home.*
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers;
 
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import com.example.bsapp.mvp.model.Api as Api
-import android.util.Log
-import com.example.bsapp.mvp.model.BsList
-import org.jetbrains.annotations.NotNull
-import kotlin.properties.Delegates
+import com.example.bsapp.network.ApiInterface as Api
 
 
 /*class HomeFragment : Fragment() {
@@ -51,9 +28,9 @@ import kotlin.properties.Delegates
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
 
-        val buildsApi = retrofit.create(Api::class.java)
+        val buildsApi = retrofit.create(ApiInterface::class.java)
 
-        val response = buildsApi.getBuilds()
+        val response = buildsApi.getBs()
 
         response.observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
@@ -85,11 +62,11 @@ import kotlin.properties.Delegates
 }*/
 
 
-class HomeFragment() : Fragment(), MainContract.MainView {
+class HomeFragment() : Fragment()/*, MainContract.MainView */{
 
     val progressBar: ProgressBar? = null
     val recyclerView: RecyclerView? = null
-    lateinit var presenter:MainContract.presenter
+    lateinit var presenter:MainContract.Presenter
 
 
 
@@ -98,10 +75,10 @@ class HomeFragment() : Fragment(), MainContract.MainView {
 
 
 
-        initializeRecyclerView()
+        /*initializeRecyclerView()
         initProgressBar()
-        presenter = MainPresenter(this, GetBsIntractorImpl())
-        presenter.requestDataFromServer()
+        presenter = MainPresenter(this, BsListModel())
+        presenter.requestDataFromServer()*/
 
         return view
 
@@ -114,13 +91,13 @@ class HomeFragment() : Fragment(), MainContract.MainView {
         initProgressBar()
 
 
-        presenter = MainPresenter(this, GetBsIntractorImpl())
+        presenter = MainPresenter(this, BsListModel())
         presenter.requestDataFromServer()
 
     }*/
 
-
-    private val recyclerItemClickListener = object: RecyclerItemClickListener {
+/*
+    private val recyclerItemClickListener = object: BsItemClickListener {
 
         override fun onItemClick(bs:Bs) {
             Toast.makeText(activity, "Hey!", Toast.LENGTH_LONG).show()
@@ -128,9 +105,9 @@ class HomeFragment() : Fragment(), MainContract.MainView {
     }
 
 
-    /**
+    *//**
      * Initializing Toolbar and RecyclerView
-     */
+     *//*
     private fun initializeRecyclerView() {
         //setSupportActionBar(toolbar)
 
@@ -141,9 +118,9 @@ class HomeFragment() : Fragment(), MainContract.MainView {
     }
 
 
-    /**
+    *//**
      * Initializing progressbar programmatically
-     * */
+     * *//*
     private fun initProgressBar() {
 
         val progressBar = ProgressBar(activity, null, android.R.attr.progressBarStyleLarge)
@@ -161,7 +138,7 @@ class HomeFragment() : Fragment(), MainContract.MainView {
 
     }
 
-    private val mrecyclerItemClickListener = object:RecyclerItemClickListener {
+    private val mrecyclerItemClickListener = object:BsItemClickListener {
         override fun onItemClick(bs:Bs) {
             Toast.makeText(context, "List title: ", Toast.LENGTH_LONG).show()
         }
@@ -188,7 +165,8 @@ class HomeFragment() : Fragment(), MainContract.MainView {
     override fun onDestroy() {
         super.onDestroy()
         presenter.onDestroy()
-    }
+    }*/
+
 
     /*override fun onCreateOptionsMenu(menu:Menu):Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.

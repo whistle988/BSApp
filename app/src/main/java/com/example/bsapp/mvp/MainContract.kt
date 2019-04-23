@@ -7,7 +7,7 @@ interface MainContract {
     /**
      * Call when user interact with the view and other when view OnDestroy()
      */
-    interface presenter {
+    interface Presenter {
 
         fun onDestroy()
 

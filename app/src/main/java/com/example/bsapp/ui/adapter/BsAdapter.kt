@@ -5,11 +5,9 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import com.example.bsapp.mvp.model.Bs
 import com.example.bsapp.R
-import com.example.bsapp.mvp.RecyclerItemClickListener
-import com.example.bsapp.ui.fragment.HomeFragment
+import com.example.bsapp.ui.activity.MainActivity
 import kotlinx.android.synthetic.main.item_view_row.view.*
 
 /*class BsAdapter(val bsList: List<Bs>, val context: HomeFragment): RecyclerView.Adapter<ViewHolder>() {
@@ -40,20 +38,13 @@ class ViewHolder(val view: View): RecyclerView.ViewHolder(view) {
 }*/
 
 
-class BsAdapter(dataList:List<Bs>, recyclerItemClickListener:RecyclerItemClickListener):RecyclerView.Adapter<BsAdapter.ViewHolder>() {
+class BsAdapter(private val bsActivity: MainActivity, private var dataList:List<Bs>):RecyclerView.Adapter<BsAdapter.ViewHolder>() {
 
 
-    private val dataList:List<Bs>
-    private val recyclerItemClickListener: RecyclerItemClickListener
 
-    override fun getItemCount(): Int {
-        return dataList.size
-    }
+    //private val recyclerItemClickListener: BsItemClickListener
 
-    init{
-        this.dataList = dataList
-        this.recyclerItemClickListener = recyclerItemClickListener
-    }
+
 
 
     override fun onCreateViewHolder(parent:ViewGroup, viewType:Int):ViewHolder {
@@ -67,11 +58,17 @@ class BsAdapter(dataList:List<Bs>, recyclerItemClickListener:RecyclerItemClickLi
         holder.itemView.tvBranch.text = dataList.get(position).branch
         holder.itemView.tvTargetSystem.text = dataList.get(position).target_system
 
-        holder.itemView.setOnClickListener(object: View.OnClickListener {
+        /*holder.itemView.setOnClickListener(object: View.OnClickListener {
             override fun onClick(v:View) {
-                recyclerItemClickListener.onItemClick(dataList.get(position))
+                bsActivity.onMovieItemClick(dataList.get(position))
             }
-        })
+        })*/
+
+
+    }
+
+    override fun getItemCount(): Int {
+        return dataList.size
     }
 
     class ViewHolder(itemView:View):RecyclerView.ViewHolder(itemView) {

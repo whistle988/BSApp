@@ -4,7 +4,7 @@ import com.example.bsapp.mvp.MainContract
 import com.example.bsapp.mvp.model.Bs
 
 
-class MainPresenter(mainView:MainContract.MainView, getBsIntractor:MainContract.GetBsIntractor):MainContract.presenter, MainContract.GetBsIntractor.OnFinishedListener {
+class MainPresenter(mainView:MainContract.MainView, getBsIntractor:MainContract.GetBsIntractor):MainContract.Presenter, MainContract.GetBsIntractor.OnFinishedListener {
 
     private var mainView:MainContract.MainView
     private val getBsIntractor:MainContract.GetBsIntractor
