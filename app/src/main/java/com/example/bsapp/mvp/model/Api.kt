@@ -11,6 +11,9 @@ interface Api {
     fun getBuilds(): Observable<List<Bs>>
 }*/
 interface Api {
-    @get:GET("builds/InDriverMobile_Android?count=10")
-    val getBuilds: Call<BsList>
+    @GET("builds/InDriverMobile_Android?count=10")
+    fun getBuilds(): Call<BsList>
 }
+
+/*@GET("bins/1bsqcn/")
+fun getNoticeData():Call<NoticeList>*/

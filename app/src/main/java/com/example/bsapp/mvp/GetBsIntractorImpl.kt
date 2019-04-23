@@ -19,7 +19,7 @@ class GetBsIntractorImpl : MainContract.GetBsIntractor {
     override fun getBsList(onFinishedListener: OnFinishedListener) {
 
         val service = RetrofitInstance.getRetrofitInstance()!!.create(Api::class.java)
-        val call: Call<BsList> = service.getBuilds
+        val call: Call<BsList> = service.getBuilds()
 
         //Log.w("URL Called", call.request().url())
 

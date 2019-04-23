@@ -19,9 +19,7 @@ class MainPresenter(mainView:MainContract.MainView, getBsIntractor:MainContract.
     }
 
     override fun onRefreshButtonClick() {
-        if (mainView != null) {
-            mainView.showProgress()
-        }
+        mainView.showProgress()
         getBsIntractor.getBsList(this)
     }
 
@@ -31,17 +29,13 @@ class MainPresenter(mainView:MainContract.MainView, getBsIntractor:MainContract.
 
 
     override fun onFinished(bs_List: List<Bs>) {
-        if (mainView != null) {
-            mainView.setDataToRecyclerView(bs_List)
-            mainView.hideProgress()
-        }
+        mainView.setDataToRecyclerView(bs_List)
+        mainView.hideProgress()
     }
 
     override fun onFailure(t: Throwable) {
-        if (mainView != null) {
-            mainView.onResponseFailure(t)
-            mainView.hideProgress()
-        }
+        mainView.onResponseFailure(t)
+        mainView.hideProgress()
     }
 
 }

@@ -30,6 +30,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import com.example.bsapp.mvp.model.Api as Api
 import android.util.Log
+import com.example.bsapp.mvp.model.BsList
+import org.jetbrains.annotations.NotNull
 import kotlin.properties.Delegates
 
 
@@ -83,17 +85,11 @@ import kotlin.properties.Delegates
 }*/
 
 
-class HomeFragment : Fragment(), MainContract.MainView {
+class HomeFragment() : Fragment(), MainContract.MainView {
 
-    lateinit var dataList: List<Bs>
     val progressBar: ProgressBar? = null
     val recyclerView: RecyclerView? = null
     lateinit var presenter:MainContract.presenter
-
-    init {
-
-        this.dataList = dataList
-    }
 
 
 
@@ -102,24 +98,8 @@ class HomeFragment : Fragment(), MainContract.MainView {
 
 
 
-        //initializeRecyclerView()
-
-        val mRecyclerView = view.findViewById(R.id.recycler_view) as RecyclerView
-        val mLayoutManager = LinearLayoutManager(this.activity)
-        Log.d("debugMode", "The application stopped after this")
-        mRecyclerView.setLayoutManager(mLayoutManager)
-
-        val mAdapter = BsAdapter(dataList, recyclerItemClickListener)
-        mRecyclerView.setAdapter(mAdapter)
-
-
-        /*ProductListAdapter adapter = new ProductListAdapter(subcategoryKey,
-                getActivity(), isShoppingList);
-*/
-
+        initializeRecyclerView()
         initProgressBar()
-
-
         presenter = MainPresenter(this, GetBsIntractorImpl())
         presenter.requestDataFromServer()
 
@@ -157,6 +137,7 @@ class HomeFragment : Fragment(), MainContract.MainView {
 
         val layoutManager = LinearLayoutManager(context)
         recyclerView?.setLayoutManager(layoutManager)
+
     }
 
 
@@ -180,6 +161,12 @@ class HomeFragment : Fragment(), MainContract.MainView {
 
     }
 
+    private val mrecyclerItemClickListener = object:RecyclerItemClickListener {
+        override fun onItemClick(bs:Bs) {
+            Toast.makeText(context, "List title: ", Toast.LENGTH_LONG).show()
+        }
+    }
+
     override fun showProgress() {
         progressBar?.setVisibility(View.VISIBLE)
     }
@@ -189,13 +176,13 @@ class HomeFragment : Fragment(), MainContract.MainView {
     }
 
     override fun setDataToRecyclerView(bs_List:List<Bs>) {
-        val adapter = BsAdapter(bs_List, recyclerItemClickListener)  ///?????????
+        val adapter = BsAdapter(bs_List, mrecyclerItemClickListener)  ///?????????
         recyclerView?.setAdapter(adapter)
     }
+
     override fun onResponseFailure(throwable:Throwable) {
         Toast.makeText(activity, "Something went wrong...Error message: " + throwable.message,
             Toast.LENGTH_LONG).show()
-
     }
 
     override fun onDestroy() {

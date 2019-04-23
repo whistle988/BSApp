@@ -29,8 +29,9 @@ object RetrofitInstance {
         if (retrofit == null)
         {
             retrofit = retrofit2.Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
+                .baseUrl(BASE_URL)
                 .build()
 
         }
