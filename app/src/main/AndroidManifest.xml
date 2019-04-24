@@ -13,11 +13,15 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning">
+            tools:ignore="GoogleAppIndexingWarning">
         <activity android:name="com.example.bsapp.ui.activity.MainActivity">
+
+            <meta-data android:name="android.app.searchable"
+                android:resource="@xml/searchable"/>
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
+                <action android:name="android.intent.action.SEARCH"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>

@@ -4,18 +4,20 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
-class ApiClient {
+object ApiClient {
 
-    companion object {
-        fun create(): ApiInterface {
-            val retrofit = Retrofit.Builder()
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl("http://bs.sinet.office/")
-                .build()
-            return retrofit.create(ApiInterface::class.java)
+    private var instance: Retrofit?=null
+
+    val getInstance: Retrofit
+        get() {
+            if (instance == null)
+                instance = Retrofit.Builder()
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .baseUrl("http://bs.sinet.office/")
+                    .build()
+            return instance!!
         }
-    }
 
 }
 
