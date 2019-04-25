@@ -14,17 +14,16 @@ import com.example.bsapp.model.BsList
 import kotlinx.android.synthetic.main.item_view_row.view.*
 
 
-class BsAdapter(val context: Context,
-                internal var bsList: List<BsList.Bs>):RecyclerView.Adapter<BsAdapter.ViewHolder>(), Filterable {
+class BsAdapter(val context: Context, internal var bsList: List<BsList.Bs>):RecyclerView.Adapter<BsAdapter.ViewHolder>()/*, Filterable*/ {
 
-    internal var filterListResult: List<BsList.Bs>
+    /*internal var filterListResult: List<BsList.Bs>
 
     init {
         this.filterListResult = bsList
-    }
+    }*/
 
 
-    override fun getFilter(): Filter {
+    /*override fun getFilter(): Filter {
         return object: Filter(){
             override fun performFiltering(charString: CharSequence?): FilterResults {
                 val charSearch = charString.toString()
@@ -50,7 +49,7 @@ class BsAdapter(val context: Context,
                 notifyDataSetChanged()
             }
         }
-    }
+    }*/
 
 
     override fun onCreateViewHolder(parent:ViewGroup, viewType:Int):ViewHolder {
@@ -60,16 +59,17 @@ class BsAdapter(val context: Context,
     }
 
     override fun getItemCount(): Int {
-        return filterListResult.size
+        //return filterListResult.size
+        return bsList.size
     }
 
     override fun onBindViewHolder(holder:ViewHolder, @SuppressLint("RecyclerView") position:Int) {
 
-        holder.itemView.tvBuild.text = filterListResult.get(position).build_number
-        holder.itemView.tvBranch.text = filterListResult.get(position).branch
-        holder.itemView.tvTargetSystem.text = filterListResult.get(position).target_system
+        holder.itemView.tvBuild.text = bsList.get(position).build_number
+        holder.itemView.tvBranch.text = bsList.get(position).branch
+        holder.itemView.tvTargetSystem.text = bsList.get(position).target_system
 
-        holder.itemView.tvBuild.text = filterListResult.get(position).build_number
+        holder.itemView.tvBuild.text = bsList.get(position).build_number
         //holder.txt_url.text = filterListResult.get(position).url
 
     }
@@ -77,5 +77,10 @@ class BsAdapter(val context: Context,
     inner class ViewHolder(itemView:View):RecyclerView.ViewHolder(itemView) {
 
 
+    }
+
+    fun filterList(filteredList:ArrayList<BsList.Bs>) {
+        bsList = filteredList
+        notifyDataSetChanged()
     }
 }

@@ -8,6 +8,8 @@ import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_main.*
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.SearchView
+import android.text.Editable
+import android.text.TextWatcher
 import com.example.bsapp.R
 import com.example.bsapp.model.BsList
 import com.example.bsapp.network.ApiClient
@@ -29,7 +31,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var adapter: BsAdapter
     var compositeDisposable = CompositeDisposable()
 
-    var dataList: MutableList<BsList.Bs> = ArrayList()
+    var bsList: ArrayList<BsList.Bs> = ArrayList()
     var searchView: SearchView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,11 +51,30 @@ class MainActivity : AppCompatActivity() {
         recycler_view.setHasFixedSize(true)
         recycler_view.layoutManager = LinearLayoutManager(this)
 
-        adapter = BsAdapter(this, dataList)
+        adapter = BsAdapter(this, bsList)
         recycler_view.adapter = adapter
 
         fetchData()
 
+        //filter for edittext
+        et_search.addTextChangedListener(object : TextWatcher{
+            override fun afterTextChanged(s: Editable?) {
+                filter(s.toString())
+            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
+
+    }
+
+    private fun filter(text:String) {
+        val filteredList: ArrayList<BsList.Bs> = ArrayList()
+        for (item in bsList) {
+            if (item.build_number.toLowerCase().contains(text.toLowerCase())) {
+                filteredList.add(item)
+            }
+        }
+        adapter.filterList(filteredList)
     }
 
     private fun fetchData() {
@@ -64,8 +85,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun displayData(getBs: List<BsList.Bs>?) {
-        dataList.clear()
-        dataList.addAll(getBs!!)
+        bsList.clear()
+        bsList.addAll(getBs!!)
         adapter.notifyDataSetChanged()
     }
 
@@ -75,7 +96,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    fun onSearch(){
+    /*fun onSearch(){
 
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         searchView = findViewById<SearchView>(R.id.et_search)
@@ -95,22 +116,6 @@ class MainActivity : AppCompatActivity() {
 
         })
 
-    }
-        /*mApiClient.getBs()
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
-            .subscribe({
-                Log.d("size", it.size.toString())
-                setDataInRecyclerView(it);
-            }, {
-                Log.d("error", "errors")
-            })
-    }
-
-
-
-    private fun setDataInRecyclerView(it: ArrayList<BsList.Bs>?) {
-        recycler_view.adapter = BsAdapter(it!!,this)
     }*/
 
 

@@ -1,7 +1,12 @@
 package com.example.bsapp.model
 
 
+import com.google.gson.JsonDeserializationContext
+import com.google.gson.JsonDeserializer
+import com.google.gson.JsonElement
+import com.google.gson.JsonParseException
 import com.google.gson.annotations.SerializedName
+import java.lang.reflect.Type
 
 object BsList {
 
@@ -24,9 +29,39 @@ object BsList {
         )
 }
 
-data class Links (
-    @SerializedName ("indriver-debug-2928.apk") val indriver_debug_2928_apk: String
-)
+data class Links (val indriver_debug: String)
 
 
 
+/*
+class CustomDeserializer: JsonDeserializer<List<Map<Int, String>>> {
+    @Throws(JsonParseException::class)
+    fun deserialize(element: JsonElement, typeOfT: Type, context: JsonDeserializationContext):List<Map<Int, String>> {
+        val randomList = ArrayList()
+        val parentJsonObject = element.getAsJsonObject()
+        val childMap:Map<Int, String>
+        for (entry in parentJsonObject.entrySet())
+        {
+            childMap = HashMap()
+            for (entry1 in entry.getValue().getAsJsonObject().entrySet())
+            {
+                childMap.put(Integer.parseInt(entry1.getKey()), entry1.getValue().toString())
+            }
+            randomList.add(childMap)
+        }
+        return randomList
+    }
+}*/
+
+
+/*
+class ExampleItem(imageResource:Int, text1:String, text2:String) {
+    val imageResource:Int = 0
+    val text1:String
+    val text2:String
+    init{
+        this.imageResource = imageResource
+        this.text1 = text1
+        this.text2 = text2
+    }
+}*/
