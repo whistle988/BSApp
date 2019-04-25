@@ -1,11 +1,13 @@
 package com.example.bsapp.model
 
 
+import com.example.bsapp.Links
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import com.google.gson.JsonParseException
 import com.google.gson.annotations.SerializedName
+
 import java.lang.reflect.Type
 
 object BsList {
@@ -29,7 +31,15 @@ object BsList {
         )
 }
 
-data class Links (val indriver_debug: String)
+//data class Links (val indriver_debug: String)
+
+/*class Links {
+
+    var linksPairs: Map<String, String>? = null*/
+
+    /*fun getTradingPairs(fromSymbol: String): Map<String, String> {
+        return exchangePairs.get(fromSymbol)
+    }*/
 
 
 
@@ -65,3 +75,7 @@ class ExampleItem(imageResource:Int, text1:String, text2:String) {
         this.text2 = text2
     }
 }*/
+
+
+
+

@@ -15,11 +15,13 @@ import com.example.bsapp.model.BsList
 import com.example.bsapp.network.ApiClient
 import com.example.bsapp.network.ApiInterface
 import com.example.bsapp.ui.adapter.BsAdapter
+import com.google.gson.JsonObject
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-
+import org.json.*
+import org.json.simple.parser.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -37,11 +39,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        /*//Toolbar
-        setSupportActionBar(toolbar)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        supportActionBar!!.title = "Filters"*/
 
         //Init Api
         val retrofit = ApiClient.getInstance
@@ -76,6 +73,8 @@ class MainActivity : AppCompatActivity() {
         }
         adapter.filterList(filteredList)
     }
+
+
 
     private fun fetchData() {
         compositeDisposable.add(mApiClient.getBs

@@ -27,11 +27,13 @@ object ApiClient {
                 instance = Retrofit.Builder()
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create())
-                    .addConverterFactory(createGsonConverter())
+
                     .baseUrl("http://bs.sinet.office/")
                     .build()
             return instance!!
         }
+
+
 
 }
 

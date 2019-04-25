@@ -9,25 +9,19 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.lang.reflect.Type
 
 
-class RedirectionInfo {
+class Links {
 
     val links: Map<String, String>? = null
-
-
-
 }
 
-internal class RedirectionInfoDeserializer : JsonDeserializer<RedirectionInfo> {
+internal class LinksUrlDeserializer : JsonDeserializer<Links> {
 
     @Throws(JsonParseException::class)
-    override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): RedirectionInfo {
+    override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): Links {
         val jsonObject = json.asJsonObject
-
-
         // Read the dynamic links object.
-        val links = readlinksMap(jsonObject)
-
-        val result = RedirectionInfo()
+        val linksPair = readlinksMap(jsonObject)
+        val result = Links()
         result.links
         return result
     }
